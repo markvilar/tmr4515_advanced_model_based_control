@@ -1,6 +1,6 @@
 %% Model
+run('parameters.m');
 run('initCtrlPlantModel.m');
-
 
 %% Kalman parameters
 
