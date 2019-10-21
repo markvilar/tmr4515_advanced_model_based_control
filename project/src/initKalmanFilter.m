@@ -1,16 +1,25 @@
 %% Model
-run('parameters.m');
+run('start_up.m');
 run('initCtrlPlantModel.m');
 
 %% Kalman parameters
 
-% Look at later
+%
 Q = eye(2);
-R = 10^(-6)*eye(2);
+
+% Look at later
+Qd = eye(2);
+Rd = eye(2);
+
+% Prior
+xbar = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0;];
+Pbar = diag([1, 1, 1, 1, 10, 10, 10, 10, 1, 1].^2);
 
 %%
 % Exact discretization
-[~, Bd] = c2d(Ac, Bc, Ts);
+[Ad, Bd] = c2d(Ac, Bc, Ts);
+[~, Gd] = c2d(Ac, Gc, Ts);
+Cd = Cc;
 
 % Discretization using van Loans method
 M = Ts* [
@@ -19,5 +28,7 @@ M = Ts* [
     ];
 
 N = expm(M);
-Ad = N(11:20, 11:20)';
-Qd = Ad*N(1:10, 11:20);
+Advl = N(11:20, 11:20)';
+Qdvl = Advl*N(1:10, 11:20);
+
+%[kest, L, K, P, Z] = kalmd(sys, Q, R, Ts);

@@ -39,3 +39,5 @@ Gc = [
     zeros(8,2);
     0.2*eye(2);
     ];
+
+sys = ss(Ac, Bc, Cc, []);
