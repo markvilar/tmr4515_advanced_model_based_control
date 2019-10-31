@@ -1,4 +1,4 @@
-function [Ad, Bd, Qd, M, N] = VanLoan(A, B, G, D, Ts)
+function [Ad, Bd, Qd] = VanLoan(A, B, G, D, Ts)
 % Discretization of stochastic LTI systems using Van Loans method.
 % arg A: nxn array of floats, continuous time transition matrix
 % arg B: nxj array of floats, continuous time input matrix
@@ -8,8 +8,6 @@ function [Ad, Bd, Qd, M, N] = VanLoan(A, B, G, D, Ts)
 % return Ad: nxn array of floats
 % return Bd: nxj array of floats
 % return Q: nxn array of floats
-% return M: 2nx2n array of floats
-% return N: (n+j)x(n+j) array of floats
 n = size(A, 1);
 j = size(B, 2);
 
