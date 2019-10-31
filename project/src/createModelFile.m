@@ -16,28 +16,28 @@ function createModelFile()
     Jl1 = 1;
     Jl2 = 1;
 
-    Ac = [
+    A = [
         zeros(4,4), eye(4), zeros(4,2);
         (1/Jl1)*[-(k1+k2+k3), k2, k3, 0, -(b1+b2+b3), b2, b3, 0, 1, 0];
         (1/Jm1)*[k2, -(k2+k4), 0, k4, b2, -(b2+b4), 0, b4, 0, 0];
         (1/Jm2)*[k3, 0, -(k3+k5), k5, b3, 0, -(b3+b5), b5, 0, 0];
         (1/Jl2)*[0, k4, k5, -(k4+k5), 0, b4, b5, -(b4+b5), 0, 1];
         [zeros(1,8), -0.2, 0];
-        [zeros(1,7), 1, 0, -0.2];
+        [zeros(1,7), 0, 0, -0.2];
         ];
-    Bc = [
+    B = [
         zeros(5,2);
         (1/Jm1)*eye(2);
         zeros(3,2);
         ];
-    Cc = [
+    C = [
         [1, zeros(1,9)];
         [zeros(1,3), 1, zeros(1,6)];
         ];
-    Gc = [
+    G = [
         zeros(8,2);
         0.2*eye(2);
         ];
-    sys = ss(Ac, Bc, Cc, []);
-    save('ctrlPlantModel.mat', 'Ac', 'Bc', 'Cc', 'Gc', 'sys');
+    sys = ss(A, B, C, []);
+    save('ctrlPlantModel.mat', 'A', 'B', 'C', 'G', 'sys');
 end
