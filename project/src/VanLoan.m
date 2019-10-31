@@ -18,7 +18,6 @@ M = expm([-A G*D*G'; zeros(n, n) A']*Ts);
 N = expm([A B; zeros(j, n) zeros(j, j)]*Ts);
 
 % Extract sub matrices
-M11 = M(1:n, 1:n);
 M12 = M(1:n, n+1:n+n);
 M22 = M(n+1:n+n, n+1:n+n);
 N12 = N(1:n, n+1:n+j);
