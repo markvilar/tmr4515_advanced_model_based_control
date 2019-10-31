@@ -7,21 +7,15 @@ Cc = ctrlPlantModel.C;
 
 ctrlPlantModel1 = load('ctrlPlantModel1.mat');
 Ac1 = ctrlPlantModel1.A;
-Bc1 = ctrlPlantModel1.B;
-Gc1 = ctrlPlantModel1.G;
-Cc1 = ctrlPlantModel1.C;
+sys1 = ctrlPlantModel1.sys;
 
 ctrlPlantModel2 = load('ctrlPlantModel2.mat');
 Ac2 = ctrlPlantModel2.A;
-Bc2 = ctrlPlantModel2.B;
-Gc2 = ctrlPlantModel2.G;
-Cc2 = ctrlPlantModel2.C;
+sys2 = ctrlPlantModel2.sys;
 
 ctrlPlantModel3 = load('ctrlPlantModel3.mat');
 Ac3 = ctrlPlantModel3.A;
-Bc3 = ctrlPlantModel3.B;
-Gc3 = ctrlPlantModel3.G;
-Cc3 = ctrlPlantModel3.C;
+sys3 = ctrlPlantModel3.sys;
 
 %% Covariance matrices and priors
 % Process and measurement noise covariances
@@ -31,16 +25,19 @@ IThetaL1 = 10^(-6);
 IThetaL2 = 10^(-6);
 
 % Variance = Intensity / Sampling time (approximation)
-D = [IW1 0; 0 IW2] / Ts;
-R = [IThetaL1 0; 0 IThetaL2] / Ts; % Little uncertain about this one
+Q = [IW1 0; 0 IW2] / Ts;
+R = [IThetaL1 0; 0 IThetaL2] / Ts; % Uncertain about this one
+Rd = R / Ts;
 
 % Prior
 x0 = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0;];
 P0 = diag([1, 1, 1, 1, 10, 10, 10, 10, 1, 1].^2);
 
 %%
-[Ad, Bd, Qd] = VanLoan(Ac, Bc, Gc, D, Ts);
-[Ad1, Bd1, Qd1] = VanLoan(Ac1, Bc1, Gc1, D, Ts);
-[Ad2, Bd2, Qd2] = VanLoan(Ac2, Bc2, Gc2, D, Ts);
-[Ad3, Bd3, Qd3] = VanLoan(Ac3, Bc3, Gc3, D, Ts);
-Rd = R;
+[Ad, Bd, Qd] = VanLoan(Ac, Bc, Gc, Q, Ts);
+[Ad1, Bd1, Qd1] = VanLoan(Ac1, Bc, Gc, Q, Ts);
+[Ad2, Bd2, Qd2] = VanLoan(Ac2, Bc, Gc, Q, Ts);
+[Ad3, Bd3, Qd3] = VanLoan(Ac3, Bc, Gc, Q, Ts);
+[~, W1, ~, ~, ~] = kalmd(sys1, Q, R, Ts);
+[~, W2, ~, ~, ~] = kalmd(sys2, Q, R, Ts);
+[~, W3, ~, ~, ~] = kalmd(sys3, Q, R, Ts);

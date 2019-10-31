@@ -1,9 +1,9 @@
 function createModelFile()
     k1 = 0.15;
-    k2 = 1.626;
+    k2 = 1.625;
     k3 = 0.1;
     k4 = 0.1;
-    k5 = 1.7;
+    k5 = 1.75;
 
     b1 = 0.1;
     b2 = 0.1;
@@ -38,6 +38,6 @@ function createModelFile()
         zeros(8,2);
         0.2*eye(2);
         ];
-    sys = ss(A, B, C, []);
-    save('ctrlPlantModel.mat', 'A', 'B', 'C', 'G', 'sys');
+    sys = ss(A, [B G], C, []);
+    save('ctrlPlantModel3.mat', 'A', 'B', 'C', 'G', 'sys');
 end
