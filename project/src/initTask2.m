@@ -42,3 +42,6 @@ P0 = diag([1, 1, 1, 1, 1, 1, 1, 1, 1, 1].^2);
 [~, W1, P1, ~, ~] = kalmd(sys1, Qn, Rn, Ts);
 [~, W2, P2, ~, ~] = kalmd(sys2, Qn, Rn, Ts);
 [~, W3, P3, ~, ~] = kalmd(sys3, Qn, Rn, Ts);
+
+%% Probability threshold
+probThreshold = 1e-4;
