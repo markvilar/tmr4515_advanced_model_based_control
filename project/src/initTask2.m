@@ -23,9 +23,9 @@ IThetaL1 = 10^(-6);
 IThetaL2 = 10^(-6);
 
 % Variance = Intensity / Sampling time (approximation)
-Qn = [IW1 0; 0 IW2]; % Little uncertain about this one!
+Qn = [IW1 0; 0 IW2];
 Rn = [IThetaL1 0; 0 IThetaL2];
-Rd = Rn / Ts; % This is right! Leads to filter consistency!
+Rd = Rn / Ts;
 
 %% Priors
 % Prior state estimate
