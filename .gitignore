@@ -1,6 +1,8 @@
 # Folders
 slprj/
+results/
 
 # Files
 *.slxc
 *.asv
+*.autosave

@@ -23,9 +23,9 @@ IThetaL1 = 10^(-6);
 IThetaL2 = 10^(-6);
 
 % Variance = Intensity / Sampling time (approximation)
-Qn = [IW1 0; 0 IW2]; % Little uncertain about this one!
+Qn = [IW1 0; 0 IW2];
 Rn = [IThetaL1 0; 0 IThetaL2];
-Rd = Rn / Ts; % This is right! Leads to filter consistency!
+Rd = Rn / Ts;
 
 %% Priors
 % Prior state estimate
@@ -42,3 +42,6 @@ P0 = diag([1, 1, 1, 1, 1, 1, 1, 1, 1, 1].^2);
 [~, W1, P1, ~, ~] = kalmd(sys1, Qn, Rn, Ts);
 [~, W2, P2, ~, ~] = kalmd(sys2, Qn, Rn, Ts);
 [~, W3, P3, ~, ~] = kalmd(sys3, Qn, Rn, Ts);
+
+%% Probability threshold
+probThreshold = 1e-4;
