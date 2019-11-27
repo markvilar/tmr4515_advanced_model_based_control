@@ -8,7 +8,7 @@ Cc = ctrlPlantModel.C;
 %% Covariance matrices
 % Process white noise intensity
 IW1 = 1;
-IW2 = 1;
+IW2 = 11;
 
 % Measurement white noise intensity
 IThetaL1 = 10^(-6);
