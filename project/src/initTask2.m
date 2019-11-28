@@ -39,9 +39,9 @@ P0 = diag([1, 1, 1, 1, 1, 1, 1, 1, 1, 1].^2);
 [Ad1, Bd1, Qd1] = VanLoan(Ac1, Bc1, Gc1, Qn, Ts);
 [Ad2, Bd2, Qd2] = VanLoan(Ac2, Bc1, Gc1, Qn, Ts);
 [Ad3, Bd3, Qd3] = VanLoan(Ac3, Bc1, Gc1, Qn, Ts);
-[~, W1, P1, ~, ~] = kalmd(sys1, Qn, Rn, Ts);
-[~, W2, P2, ~, ~] = kalmd(sys2, Qn, Rn, Ts);
-[~, W3, P3, ~, ~] = kalmd(sys3, Qn, Rn, Ts);
+[~, L1, P1, ~, ~] = kalmd(sys1, Qn, Rn, Ts);
+[~, L2, P2, ~, ~] = kalmd(sys2, Qn, Rn, Ts);
+[~, L3, P3, ~, ~] = kalmd(sys3, Qn, Rn, Ts);
 
 %% Probability threshold
 probThreshold = 1e-6;
