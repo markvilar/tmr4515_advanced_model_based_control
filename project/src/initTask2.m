@@ -13,7 +13,7 @@ ctrlPlantModel3 = load('../models/ctrlPlantModel3.mat');
 Ac3 = ctrlPlantModel3.A;
 sys3 = ctrlPlantModel3.sys;
 
-%% Covariance matrices
+%% Continuous time noise intensities
 % Process white noise intensity
 IW1 = 1;
 IW2 = 1;
@@ -25,23 +25,23 @@ IThetaL2 = 10^(-6);
 % Variance = Intensity / Sampling time (approximation)
 Qn = [IW1 0; 0 IW2];
 Rn = [IThetaL1 0; 0 IThetaL2];
-Rd = Rn / Ts;
 
 %% Priors
 % Prior state estimate
 x0 = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0;];
 
 % Prior covariance estimate
-P0 = diag([1, 1, 1, 1, 1, 1, 1, 1, 1, 1].^2);
+P0 = diag([1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3].^2);
 
 %% Discretization
-% Bc and Gc are equal for all the models
 [Ad1, Bd1, Qd1] = VanLoan(Ac1, Bc1, Gc1, Qn, Ts);
 [Ad2, Bd2, Qd2] = VanLoan(Ac2, Bc1, Gc1, Qn, Ts);
 [Ad3, Bd3, Qd3] = VanLoan(Ac3, Bc1, Gc1, Qn, Ts);
+Rd = Rn / Ts;
+
 [~, L1, P1, ~, ~] = kalmd(sys1, Qn, Rn, Ts);
 [~, L2, P2, ~, ~] = kalmd(sys2, Qn, Rn, Ts);
 [~, L3, P3, ~, ~] = kalmd(sys3, Qn, Rn, Ts);
 
-%% Probability threshold
+%% DHT probability threshold
 probThreshold = 1e-6;
