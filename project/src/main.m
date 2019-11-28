@@ -1,6 +1,7 @@
 %% General
 clear all; close all; clc;
 runSimulation = true;
+simulationTime = 300;
 
 %% Initialization of models
 run('start_up.m');
@@ -9,5 +10,5 @@ run('initTask2.m');
 
 %% Run
 if runSimulation
-    run('simulation.slx');
+    sim('simulation.slx', simulationTime);
 end
