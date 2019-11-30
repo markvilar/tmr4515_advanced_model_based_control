@@ -4,7 +4,7 @@ runSimulation = true;
 simulationTime = 200;
 
 %% Plant parameter events
-k2Event = 2; % 1 = steps, 2 = sinus, 3 = constant
+k2Event = 3; % 1 = steps, 2 = sinus, 3 = constant
 k5Event = 3; % 1 = steps, 2 = sinus, 3 = constant
 
 %% Plant parameters
