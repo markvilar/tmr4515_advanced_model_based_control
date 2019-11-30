@@ -3,6 +3,8 @@ load('../results/task1/nis.mat');
 load('../results/task1/y.mat');
 load('../results/task1/z.mat');
 load('../results/task1/ybar.mat');
+
+%% Extract variables
 time = nis(1, :); time = time(:);
 nis = nis(2,:); nis = nis(:);
 y = y(2:3,:);
@@ -59,7 +61,7 @@ RMSE = sqrt(MSE);
 fprintf('MSE: %f\n', MSE);
 fprintf('RMSE: %f\n', RMSE);
 
-%% Filter consistency
+%% Filter consistency - NIS sequence
 alpha = 0.05;
 CI2N = chi2inv([alpha/2, 1-alpha/2], M);
 inCI = sum((nis >= CI2N(1)) .* (nis <= CI2N(2)))/N * 100;

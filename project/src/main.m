@@ -1,11 +1,11 @@
 %% General
 clear all; close all; clc;
 runSimulation = true;
-simulationTime = 300;
+simulationTime = 200;
 
 %% Plant parameter events
-k2Event = 1; % 1 = steps, 2 = sinus, 3 = constant
-k5Event = 1; % 1 = steps, 2 = sinus, 3 = constant
+k2Event = 2; % 1 = steps, 2 = sinus, 3 = constant
+k5Event = 3; % 1 = steps, 2 = sinus, 3 = constant
 
 %% Plant parameters
 % Constants
@@ -27,10 +27,10 @@ k5Time2 = 200; % Switch time
 % Sinus parameters
 k2Amp = 1; % Amplitude
 k2Mean = 2; % Mean value
-k2Freq = 0.05; % Frequency [rad/s]
+k2Freq = 0.03; % Frequency [rad/s]
 k5Amp = 0.5; % Amplitude
 k5Mean = 1.5; % Mean value
-k5Freq = 0.05; % Frequency [rad/s]
+k5Freq = 0.03; % Frequency [rad/s]
 
 %% Initialization of models
 run('start_up.m');
