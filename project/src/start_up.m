@@ -1,8 +1,4 @@
-clc
-clear all
-close all
 run('parameters.m');
-%plotarea
 
 %%  Load and descretize GNARC
 load('GNARC1.mat');
