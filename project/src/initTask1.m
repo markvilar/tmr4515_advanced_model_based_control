@@ -23,7 +23,7 @@ Rn = [IThetaL1 0; 0 IThetaL2];
 x0 = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0;];
 
 % Prior covariance estimate
-P0 = diag([1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3].^2);
+P0 = diag([1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1].^2);
 
 %% Discretization
 [Ad, Bd, Qd] = VanLoan(Ac, Bc, Gc, Qn, Ts);

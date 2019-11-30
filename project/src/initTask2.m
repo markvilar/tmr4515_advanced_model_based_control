@@ -22,16 +22,17 @@ IW2 = 1;
 IThetaL1 = 10^(-6);
 IThetaL2 = 10^(-6);
 
-% Variance = Intensity / Sampling time (approximation)
+% Continuous time noise intensity matrices
 Qn = [IW1 0; 0 IW2];
 Rn = [IThetaL1 0; 0 IThetaL2];
 
 %% Priors
 % Prior state estimate
-x0 = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0;];
+x0Dht = [0; 0; 0; 0; 0; 0; 0; 0; 0; 0;];
 
 % Prior covariance estimate
-P0 = diag([1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3].^2);
+P0Dht = diag([1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, 1e-1, ...
+    1e-1].^2);
 
 %% Discretization
 [Ad1, Bd1, Qd1] = VanLoan(Ac1, Bc1, Gc1, Qn, Ts);
@@ -43,5 +44,8 @@ Rd = Rn / Ts;
 [~, L2, P2, ~, ~] = kalmd(sys2, Qn, Rn, Ts);
 [~, L3, P3, ~, ~] = kalmd(sys3, Qn, Rn, Ts);
 
-%% DHT probability threshold
-probThreshold = 1e-6;
+%% DHT probabilities
+p0 = [1/3, 1/3, 1/3]; % Initial hypothesis probabilities
+assert(any(p0 >= 0), 'Hypothesis probabilities cannot be negative.\n');
+p0 = p0 / sum(p0); % Normalize initial hypothesis probabilities
+probThreshold = 1e-6; % Lower probability threshold

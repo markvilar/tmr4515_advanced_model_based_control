@@ -1,19 +1,59 @@
 %% Load results
-load('../results/NIS.mat');
-load('../results/zNoise.mat');
-load('../results/z.mat');
-load('../results/zbar.mat');
-NIS = NIS(2,:); NIS = NIS(:);
-zNoise = zNoise(2,:); zNoise = zNoise(:);
-z = z(2,:); z = z(:);
-zbar = zbar(2,:); zbar = zbar(:);
+load('../results/task1/nis.mat');
+load('../results/task1/y.mat');
+load('../results/task1/z.mat');
+load('../results/task1/ybar.mat');
+time = nis(1, :); time = time(:);
+nis = nis(2,:); nis = nis(:);
+y = y(2:3,:);
+z = z(2:3,:);
+ybar = ybar(2:3,:);
 
 M = 2;
-N = length(NIS);
+N = length(nis);
+
+%% Estimates
+figure(1); clf;
+subplot(2, 1, 1);
+hold on;
+plot(time, y(1,:), 'b', 'Linewidth', 1.2);
+plot(time, ybar(1,:), 'g', 'Linewidth', 1.2);
+ylabel('$\theta_{L1}$ [rad]', 'Interpreter', 'Latex', 'FontSize', 14);
+xlabel('Time [s]', 'Interpreter', 'Latex', 'FontSize', 14);
+legend('Measurement', 'Estimate', 'Interpreter', 'Latex');
+
+subplot(2, 1, 2);
+hold on;
+plot(time, y(2,:), 'b', 'Linewidth', 1.2);
+plot(time, ybar(2,:), 'g', 'Linewidth', 1.2);
+ylabel('$\theta_{L2}$ [rad]', 'Interpreter', 'Latex', 'FontSize', 14);
+xlabel('Time [s]', 'Interpreter', 'Latex', 'FontSize', 14);
+legend('Measurement', 'Estimate', 'Interpreter', 'Latex');
+
+sgtitle('Measurements and estimates', 'Interpreter', 'Latex', ...
+    'Fontsize', 14);
+
+%% Innovation sequence
+innovs = y - ybar;
+
+figure(2); clf;
+subplot(2, 1, 1);
+hold on;
+plot(time, innovs(1,:), 'b', 'Linewidth', 1.2);
+ylabel('$\tilde{\theta}_{L1}$ [rad]', 'Interpreter', 'Latex', 'FontSize', 14);
+xlabel('Time [s]', 'Interpreter', 'Latex', 'FontSize', 14);
+
+subplot(2, 1, 2);
+hold on;
+plot(time, innovs(2,:), 'b', 'Linewidth', 1.2);
+ylabel('$\tilde{\theta}_{L2}$ [rad]', 'Interpreter', 'Latex', 'Fontsize', 14);
+xlabel('Time [s]', 'Interpreter', 'Latex', 'FontSize', 14);
+
+sgtitle('Sequence of innovations', 'Interpreter', 'Latex', ...
+    'Fontsize', 14);
 
 %% RMSE and max error
-innovations = z - zbar;
-MSE = mean(innovations.^2);
+MSE = mean(sum(innovs.^2));
 RMSE = sqrt(MSE);
 
 fprintf('MSE: %f\n', MSE);
@@ -22,11 +62,16 @@ fprintf('RMSE: %f\n', RMSE);
 %% Filter consistency
 alpha = 0.05;
 CI2N = chi2inv([alpha/2, 1-alpha/2], M);
-inCI = sum((NIS >= CI2N(1)) .* (NIS <= CI2N(2)))/N * 100;
+inCI = sum((nis >= CI2N(1)) .* (nis <= CI2N(2)))/N * 100;
 
-figure(2); clf;
-plot(NIS); grid on; hold on;
-ylabel('NIS');
-plot([1,N], repmat(CI2N',[1,2])','r--')
-title(sprintf('%.2f%% inside CI', inCI));
-xlim([1 N]);
+titleString = sprintf('Sequence of NISes (%.1f\\%% inside %.1f\\%%-CI)', ...
+    inCI, (1-alpha)*100);
+
+figure(3); clf;
+hold on;
+plot(time, nis, 'b', 'Linewidth', 1.2);
+plot([time(1), time(end)], repmat(CI2N',[1,2])', 'r--', 'Linewidth', 2)
+title(titleString, 'Interpreter', 'Latex', 'FontSize', 14);
+ylabel('NIS [-]', 'Interpreter', 'Latex', 'FontSize', 14);
+xlabel('Time [s]', 'Interpreter', 'Latex', 'FontSize', 14);
+legend('NIS', 'Conf. int. bounds', 'Interpreter', 'Latex');
